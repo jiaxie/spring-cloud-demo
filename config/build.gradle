@@ -1,0 +1,30 @@
+group 'demo'
+version '1.0-SNAPSHOT'
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.9.RELEASE")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+
+
+dependencies {
+    compile('org.springframework.cloud:spring-cloud-config-server:1.4.2.RELEASE')
+    compile('org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:1.4.2.RELEASE')
+}
+
+repositories {
+    maven {
+        url 'https://repo.spring.io/libs-snapshot'
+    }
+}
+
