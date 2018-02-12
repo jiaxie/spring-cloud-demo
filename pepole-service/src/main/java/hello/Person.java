@@ -12,4 +12,6 @@ public class Person {
     @Getter
     private String sex;
 
+    @Getter
+    private String role;
 }
