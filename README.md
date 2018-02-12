@@ -49,5 +49,6 @@ $ cd config
 $ ./gradlew clean build
 $ ./gradlew bootRun
 ```
-Access different env configuration properties by [http://localhost:8888/config/dev](http://localhost:8888/config/dev).
+Access different env configuration properties by [http://localhost:8888/people-service/dev](http://localhost:8888/people-service/dev).
+
 The value "dev" can also be "dev", "test", "prod".
