@@ -19,7 +19,8 @@ $ ./gradlew clean build
 $ ./gradlew bootRun
 ```
 Access the service by opening [http://localhost:8081/greeting/](http://localhost:8081/greeting/) in your browser.
-
+Use Feign client to call people service, so can use [http://localhost:8081/callPeople?username=xx&usersex=zz](http://localhost:8081/callPeople?username=xx&usersex=zz)
+to access people-service.
 
 ## Setup People-Service
 
