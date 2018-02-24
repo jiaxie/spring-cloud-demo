@@ -1,0 +1,58 @@
+# docker-images
+This is to create spring-cloud-demo docker images.
+
+## Usage
+##Automatically build and push base image:
+```
+cd docker-images
+./build.sh {dockerfile_dir} {tag}          #{dockerfile_dir} cannot contain "/".
+```
+e.g.
+```
+./build.sh gradle 1
+```
+
+##Directly use command to build/push/pull/run docker image
+###Build base image:
+
+```
+cd base
+docker build -t {docker registery domain}/{namespace}/{repository name}:{tag} .
+
+# Because we don not have {docker registery domain}, so we just ignore it right now.
+```
+e.g.
+
+```
+docker build -t spring-cloud-demo/gradle:1 .
+```
+
+###Push to registry:
+
+```
+docker push {docker registery domain}/{namespace}/{repository name}:{tag}
+```
+
+###Pull images from registry:
+
+```
+docker pull {docker registery domain}/{namespace}/{repository name}:{tag}
+```
+
+###Run the image:
+
+```
+docker run {docker registery domain}/{namespace}/{repository name}:{tag}
+```
+
+###Run the image assuming something listening on port 80
+
+```
+docker run -d -p 80:80 {docker registery domain}/{namespace}/{repository name}:{tag}
+```
+
+###Run the image with an interactive shell
+
+```
+docker run -ti {docker registery domain}/{namespace}/{repository name}:{tag} /bin/bash
+```
