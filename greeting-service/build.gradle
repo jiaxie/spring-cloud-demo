@@ -1,3 +1,6 @@
+group 'demo'
+version '1.0-SNAPSHOT'
+
 buildscript {
     repositories {
         mavenCentral()
@@ -14,7 +17,7 @@ apply plugin: 'org.springframework.boot'
 
 jar {
     baseName = 'greeting-service'
-    version =  '0.1.0'
+    version =  '1.0-SNAPSHOT'
 }
 
 repositories {
@@ -35,18 +38,14 @@ dependencies {
     testCompile('com.jayway.jsonpath:json-path')
 }
 
-//dependencyManagement {
-//    imports {
-//        mavenBom ':spring-cloud-dependencies:Finchley.M5'
-//    }
-//}
-//
-//dependencies {
-//    compile ':spring-cloud-starter-config'
-//    compile ':spring-cloud-starter-eureka'
-//}
 repositories {
     maven {
         url 'https://repo.spring.io/libs-milestone'
+    }
+}
+
+task dev {
+    doLast {
+        bootRun.systemProperty 'spring.profiles.active', 'dev'
     }
 }

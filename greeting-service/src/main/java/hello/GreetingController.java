@@ -2,12 +2,14 @@ package hello;
 
 import java.util.concurrent.atomic.AtomicLong;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 
+@Slf4j
 @EnableEurekaClient
 @RestController
 public class GreetingController {
@@ -20,6 +22,7 @@ public class GreetingController {
 
     @RequestMapping("/greeting")
     public Greeting greeting(@RequestParam(value = "name", defaultValue = "World") String name) {
+        log.info("Had a greeting for you: {}", name);
         return new Greeting(counter.incrementAndGet(),
                 String.format(template, name));
     }
@@ -27,6 +30,7 @@ public class GreetingController {
     @RequestMapping("/callPeople")
     public Person callPeople(@RequestParam(value="username") String name,
                              @RequestParam(value="usersex") String sex) {
+        log.info("Call people you: {}, {}", name, sex);
         return peopleClient.get(name, sex);
     }
 }
