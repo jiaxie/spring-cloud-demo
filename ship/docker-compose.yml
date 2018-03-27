@@ -53,21 +53,26 @@ services:
       retries: 10
 
 
-#  people-service:
-#    build: ../people-service
-#    networks:
-#      - demonet
-#    image: spring-cloud-demo/people-service
-#    container_name: people-service
-#    restart: always
-#    ports:
-#      - "8082:8082"
-#    depends_on:
-#      - eureka
-#      - config
-#      - zuul
-#    command: bash -c "/usr/local/bin/wait-for-it eureka:8999 && java -jar /app/people-service-latest.jar"
-#
+  people-service:
+    build: ../people-service
+    networks:
+      - demonet
+    image: spring-cloud-demo/people-service
+    container_name: people-service
+    restart: always
+    ports:
+      - "8082:8082"
+    depends_on:
+      - eureka
+      - config
+      - zuul
+    command: bash -c "java -jar /app/people-service-latest.jar"
+    healthcheck:
+      test: nc -v -w 5 -z localhost 8082
+      interval: 10s
+      timeout: 10s
+      retries: 10
+
 #  greeting-service:
 #    build: ../greeting-service
 #    networks:
