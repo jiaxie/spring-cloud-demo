@@ -33,20 +33,26 @@ services:
       timeout: 10s
       retries: 10
 
-#  zuul:
-#    build: ../zuul
-#    networks:
-#      - demonet
-#    image: spring-cloud-demo/zuul
-#    container_name: zuul
-#    restart: always
-#    ports:
-#      - "8080:8080"
-#    depends_on:
-#      - eureka
-#      - config
-#    command: bash -c "/usr/local/bin/wait-for-it eureka:8999 && java -jar /app/zuul-latest.jar"
-#
+  zuul:
+    build: ../zuul
+    networks:
+      - demonet
+    image: spring-cloud-demo/zuul
+    container_name: zuul
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      - eureka
+      - config
+    command: bash -c "java -jar /app/zuul-latest.jar"
+    healthcheck:
+      test: nc -v -w 5 -z localhost 8080
+      interval: 10s
+      timeout: 10s
+      retries: 10
+
+
 #  people-service:
 #    build: ../people-service
 #    networks:
