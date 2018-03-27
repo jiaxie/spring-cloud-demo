@@ -73,21 +73,26 @@ services:
       timeout: 10s
       retries: 10
 
-#  greeting-service:
-#    build: ../greeting-service
-#    networks:
-#      - demonet
-#    image: spring-cloud-demo/greeting-service
-#    container_name: greeting-service
-#    restart: always
-#    ports:
-#      - "8081:8081"
-#    depends_on:
-#      - eureka
-#      - config
-#      - zuul
-#      - people-service
-#    command: bash -c "/usr/local/bin/wait-for-it eureka:8999 && java -jar /app/greeting-service-latest.jar"
+  greeting-service:
+    build: ../greeting-service
+    networks:
+      - demonet
+    image: spring-cloud-demo/greeting-service
+    container_name: greeting-service
+    restart: always
+    ports:
+      - "8081:8081"
+    depends_on:
+      - eureka
+      - config
+      - zuul
+      - people-service
+    command: bash -c "java -jar /app/greeting-service-latest.jar"
+    healthcheck:
+      test: nc -v -w 5 -z localhost 8081
+      interval: 10s
+      timeout: 10s
+      retries: 10
 
 networks:
   demonet:
