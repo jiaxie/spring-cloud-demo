@@ -1,0 +1,83 @@
+version: '3'
+services:
+  eureka:
+    build: ../eureka
+    networks:
+      - demonet
+    image: spring-cloud-demo/eureka
+    container_name: eureka
+    restart: always
+    ports:
+      - "8999:8999"
+    healthcheck:
+      test: nc -v -w 5 -z localhost 8999
+      interval: 10s
+      timeout: 10s
+      retries: 10
+
+  config:
+    build: ../config
+    networks:
+      - demonet
+    image: spring-cloud-demo/config
+    container_name: config
+    restart: always
+    ports:
+      - "8888:8888"
+    depends_on:
+      - eureka
+    command: bash -c "java -jar /app/config-latest.jar"
+    healthcheck:
+      test: nc -v -w 5 -z localhost 8888
+      interval: 10s
+      timeout: 10s
+      retries: 10
+
+#  zuul:
+#    build: ../zuul
+#    networks:
+#      - demonet
+#    image: spring-cloud-demo/zuul
+#    container_name: zuul
+#    restart: always
+#    ports:
+#      - "8080:8080"
+#    depends_on:
+#      - eureka
+#      - config
+#    command: bash -c "/usr/local/bin/wait-for-it eureka:8999 && java -jar /app/zuul-latest.jar"
+#
+#  people-service:
+#    build: ../people-service
+#    networks:
+#      - demonet
+#    image: spring-cloud-demo/people-service
+#    container_name: people-service
+#    restart: always
+#    ports:
+#      - "8082:8082"
+#    depends_on:
+#      - eureka
+#      - config
+#      - zuul
+#    command: bash -c "/usr/local/bin/wait-for-it eureka:8999 && java -jar /app/people-service-latest.jar"
+#
+#  greeting-service:
+#    build: ../greeting-service
+#    networks:
+#      - demonet
+#    image: spring-cloud-demo/greeting-service
+#    container_name: greeting-service
+#    restart: always
+#    ports:
+#      - "8081:8081"
+#    depends_on:
+#      - eureka
+#      - config
+#      - zuul
+#      - people-service
+#    command: bash -c "/usr/local/bin/wait-for-it eureka:8999 && java -jar /app/greeting-service-latest.jar"
+
+networks:
+  demonet:
+    driver: bridge
